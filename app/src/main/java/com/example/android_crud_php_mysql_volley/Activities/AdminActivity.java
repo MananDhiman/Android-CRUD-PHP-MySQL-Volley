@@ -1,7 +1,8 @@
-package com.example.android_crud_php_mysql_volley;
+package com.example.android_crud_php_mysql_volley.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,35 +10,51 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.android_crud_php_mysql_volley.AdminPostsAdapter;
+import com.example.android_crud_php_mysql_volley.Posts;
+import com.example.android_crud_php_mysql_volley.PostsAdapter;
+import com.example.android_crud_php_mysql_volley.R;
+import com.example.android_crud_php_mysql_volley.Variable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-public class MainActivity extends AppCompatActivity {
+
+public class AdminActivity extends AppCompatActivity {
     public static RecyclerView recyclerView;
     public static ArrayList<Posts> postsArrayList;
-    private PostsAdapter postsAdapter;
+    private AdminPostsAdapter postsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_admin);
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        Button admin_but_add_post = findViewById(R.id.admin_but_add_post);
+
+        admin_but_add_post.setOnClickListener(v -> {
+            Intent intentLogin = new Intent(AdminActivity.this, PostAddActivity.class);
+            this.startActivity(intentLogin);
+        });
 
         loadPosts();
     }
 
     private void loadPosts() {
+
         postsArrayList = new ArrayList<>();
-        recyclerView = findViewById(R.id.rv_item);
+        recyclerView = findViewById(R.id.admin_rv_item);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -52,10 +69,13 @@ public class MainActivity extends AppCompatActivity {
                     posts.setId(object.getInt("id"));
                     posts.setTitle(object.getString("title"));
                     posts.setText(object.getString("text"));
+                    posts.setImage(object.getString("image"));
+
                     postsArrayList.add(posts);
                 }
-                postsAdapter = new PostsAdapter(MainActivity.this, postsArrayList);
+                postsAdapter = new AdminPostsAdapter(AdminActivity.this,postsArrayList);
                 recyclerView.setAdapter(postsAdapter);
+
             } catch (JSONException e) {
                 e.printStackTrace();
                 Toast.makeText(this, "b", Toast.LENGTH_SHORT).show();
@@ -78,10 +98,11 @@ public class MainActivity extends AppCompatActivity {
                             posts.setId(object.getInt("id"));
                             posts.setTitle(object.getString("title"));
                             posts.setText(object.getString("text"));
+                            posts.setImage(object.getString("image"));
 
                             postsArrayList.add(posts);
                         }
-                        postsAdapter = new PostsAdapter(MainActivity.this, postsArrayList);
+                        postsAdapter = new AdminPostsAdapter(getApplicationContext(), postsArrayList);
                         recyclerView.setAdapter(postsAdapter);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -103,11 +124,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item){
         switch (item.getItemId()){
             case R.id.app_menu_login:
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-               // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(new Intent(AdminActivity.this, LoginActivity.class));
+                // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
 }

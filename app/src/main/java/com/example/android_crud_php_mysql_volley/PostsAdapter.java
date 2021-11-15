@@ -2,28 +2,21 @@ package com.example.android_crud_php_mysql_volley;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.android_crud_php_mysql_volley.Activities.PostViewActivity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
 
@@ -36,6 +29,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         final Posts posts = postsArrayList.get(position);
         holder.item_tv_title.setText(posts.getTitle());
         holder.item_tv_text.setText(posts.getText());
+
+        Glide.with(context)
+                .load(Variable.base + "images/" + posts.getImage())
+                .apply(new RequestOptions().centerCrop())
+                .into(holder.item_iv_image);
 
         holder.item_tv_readMore.setOnClickListener(v -> {
             showDetail(posts, position);
@@ -69,6 +67,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView item_tv_title, item_tv_text,item_tv_readMore;
+        ImageView item_iv_image;
         LinearLayout itemLayout;
 
         public ViewHolder(@NonNull View itemView){
@@ -76,6 +75,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             item_tv_title = itemView.findViewById(R.id.item_tv_title);
             item_tv_text = itemView.findViewById(R.id.item_tv_text);
             item_tv_readMore = itemView.findViewById(R.id.readMore);
+            item_iv_image = itemView.findViewById(R.id.item_iv_image);
             itemLayout = itemView.findViewById(R.id.item_layout_post);
         }
     }
