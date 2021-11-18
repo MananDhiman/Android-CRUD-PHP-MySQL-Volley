@@ -27,6 +27,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Posts posts = postsArrayList.get(position);
+
         holder.item_tv_title.setText(posts.getTitle());
         holder.item_tv_text.setText(posts.getText());
 

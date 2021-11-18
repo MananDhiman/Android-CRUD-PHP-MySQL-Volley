@@ -36,7 +36,7 @@ public class PostViewActivity extends AppCompatActivity {
 
         TextView detail_tv_text = findViewById(R.id.detail_tv_text);
         TextView detail_tv_title = findViewById(R.id.detail_tv_title);
-        this.imageView = (ImageView) findViewById(R.id.item_iv_image);
+        imageView = findViewById(R.id.detail_iv_image);
 
         Posts posts = getIntent().getParcelableExtra("posts");
 
@@ -50,6 +50,10 @@ public class PostViewActivity extends AppCompatActivity {
     }
 
     private void loadImage(Posts posts) {
+        Glide.with(getApplicationContext())
+                .load(Variable.base + "images/" + posts.getImage())
+                .apply(new RequestOptions().centerCrop())
+                .into(imageView);
 
     }
 

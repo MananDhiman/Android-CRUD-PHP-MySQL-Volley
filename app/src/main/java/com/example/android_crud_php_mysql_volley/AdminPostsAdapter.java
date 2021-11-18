@@ -20,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.android_crud_php_mysql_volley.Activities.AdminActivity;
+import com.example.android_crud_php_mysql_volley.Activities.PostUpdateActivity;
 import com.example.android_crud_php_mysql_volley.Activities.PostViewActivity;
 
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class AdminPostsAdapter extends RecyclerView.Adapter<AdminPostsAdapter.Vi
     public void onBindViewHolder(@NonNull AdminPostsAdapter.ViewHolder holder, int position) {
 
         final Posts posts = postsArrayList.get(position);
+
         holder.item_tv_title.setText(posts.getTitle());
         holder.item_tv_text.setText(posts.getText());
 
@@ -102,6 +104,11 @@ public class AdminPostsAdapter extends RecyclerView.Adapter<AdminPostsAdapter.Vi
     }
 
     private void updatePost(Posts posts, int position) {
+        Intent intent = new Intent(context, PostUpdateActivity.class);
+        posts.setPosition(position);
+        intent.putExtra("posts",posts);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     private void showDetail(Posts posts, int position) {
@@ -129,7 +136,7 @@ public class AdminPostsAdapter extends RecyclerView.Adapter<AdminPostsAdapter.Vi
         public ViewHolder(@NonNull View view){
             super(view);
             item_tv_title = view.findViewById(R.id.item_tv_title);
-            item_tv_text = view.findViewById(R.id.item_tv_title);
+            item_tv_text = view.findViewById(R.id.item_tv_text);
             item_tv_readMore = view.findViewById(R.id.readMore);
             item_iv_image = view.findViewById(R.id.item_iv_image);
             itemLayout = view.findViewById(R.id.item_layout_post);
