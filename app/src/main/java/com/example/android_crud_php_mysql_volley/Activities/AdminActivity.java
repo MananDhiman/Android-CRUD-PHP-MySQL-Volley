@@ -71,6 +71,8 @@ public class AdminActivity extends AppCompatActivity {
                     posts.setText(object.getString("text"));
                     posts.setImage(object.getString("image"));
 
+                    posts.setTime(object.getString("time"));
+
                     postsArrayList.add(posts);
                 }
                 postsAdapter = new AdminPostsAdapter(AdminActivity.this,postsArrayList);
@@ -99,6 +101,8 @@ public class AdminActivity extends AppCompatActivity {
                             posts.setTitle(object.getString("title"));
                             posts.setText(object.getString("text"));
                             posts.setImage(object.getString("image"));
+
+                            posts.setTime(object.getString("time"));
 
                             postsArrayList.add(posts);
                         }

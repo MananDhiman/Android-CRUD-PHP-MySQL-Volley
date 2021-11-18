@@ -36,12 +36,16 @@ public class PostViewActivity extends AppCompatActivity {
 
         TextView detail_tv_text = findViewById(R.id.detail_tv_text);
         TextView detail_tv_title = findViewById(R.id.detail_tv_title);
+        TextView detail_tv_time = findViewById(R.id.detail_tv_time);
+
         imageView = findViewById(R.id.detail_iv_image);
 
         Posts posts = getIntent().getParcelableExtra("posts");
 
         detail_tv_title.setText(posts.getTitle());
         detail_tv_text.setText(posts.getText());
+        detail_tv_time.setText("This Post was Created On: "+posts.getTime());
+
         postId = posts.getId();
         index = posts.getPosition();
 
